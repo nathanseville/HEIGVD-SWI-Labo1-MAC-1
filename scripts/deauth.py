@@ -13,9 +13,9 @@ while(True): # Emulating do while in python
 
 # Let user select the network current channel
 while(True): # Emulating do while in python
-	ch=int(input("Select channel of the network to attack [0 - 14] : "))
+	ch=int(input("Select channel of the network to attack [1 - 14] : "))
 
-	if(ch < 15 and ch > 0):
+	if(ch <= 14 and ch >= 1):
 		os.system(f"iwconfig {iface} channel {ch}")
 		break
 

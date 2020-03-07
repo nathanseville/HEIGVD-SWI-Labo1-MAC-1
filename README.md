@@ -93,6 +93,8 @@ a) Utiliser la fonction de déauthentification de la suite aircrack, capturer le
 
 __Question__ : quel code est utilisé par aircrack pour déauthentifier un client 802.11. Quelle est son interpretation ?
 
+On utilise la fonction `Dot11Deauth` qui ajoute un layer à la trame
+
 __Question__ : A l'aide d'un filtre d'affichage, essayer de trouver d'autres trames de déauthentification dans votre capture. Avez-vous en trouvé d'autres ? Si oui, quel code contient-elle et quelle est son interpretation ?
 
 b) Développer un script en Python/Scapy capable de générer et envoyer des trames de déauthentification. Le script donne le choix entre des Reason codes différents (liste ci-après) et doit pouvoir déduire si le message doit être envoyé à la STA ou à l'AP :
@@ -107,9 +109,13 @@ __Question__ : quels codes/raisons justifient l'envoie de la trame à l'AP et po
 
 __Question__ : Comment essayer de déauthentifier toutes les STA ?
 
+?????? On peut essayer d'envoyer un paquet par station connectée (on adapte la mac) ou via broadcast
+
 __Question__ : Quelle est la différence entre le code 3 et le code 8 de la liste ?
 
 __Question__ : Expliquer l'effet de cette attaque sur la cible
+
+Cette attaque déconnecte la cible du point d'accès, mais comme la cible continue de recevoir des beacons du vrai AP elle va se reconnecter directement. La station va donc continuellement réaliser le cycle connexion/déconnexion.
 
 ### 2. Fake channel evil tween attack
 a)	Développer un script en Python/Scapy avec les fonctionnalités suivantes :
@@ -120,6 +126,10 @@ a)	Développer un script en Python/Scapy avec les fonctionnalités suivantes :
 * Générer un beacon concurrent annonçant un réseau sur un canal différent se trouvant à 6 canaux de séparation du réseau original
 
 __Question__ : Expliquer l'effet de cette attaque sur la cible
+
+On annonce à la cible que le réseau change de channel. La cible va donc changer de canal afin de pouvoir continuer à communiquer avec notre réseau. Il n'y a pas de réseau sur cette frequence donc la cible va perdre la connexion.
+
+On peut également placer un réseau malicieux sur cet autre channel.
 
 
 ### 3. SSID flood attack

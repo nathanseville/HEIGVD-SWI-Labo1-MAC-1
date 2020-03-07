@@ -93,7 +93,7 @@ a) Utiliser la fonction de déauthentification de la suite aircrack, capturer le
 
 __Question__ : quel code est utilisé par aircrack pour déauthentifier un client 802.11. Quelle est son interpretation ?
 
-On utilise la fonction `Dot11Deauth` qui ajoute un layer à la trame
+C'est le reason code numéro sept qui est utilisé par aircrack pour déauthentifier un client. Ça signification est : `Class 3 frame received from nonassociated station`
 
 __Question__ : A l'aide d'un filtre d'affichage, essayer de trouver d'autres trames de déauthentification dans votre capture. Avez-vous en trouvé d'autres ? Si oui, quel code contient-elle et quelle est son interpretation ?
 
@@ -105,11 +105,15 @@ b) Développer un script en Python/Scapy capable de générer et envoyer des tra
 
 __Question__ : quels codes/raisons justifient l'envoie de la trame à la STA cible et pourquoi ?
 
+Les numéros un, quatre et cinq sont des trame envoyée par l'AP vers les STA car c'est l'AP qui défini l'incativité d'une STA ou s'il n'est pas en mesure de prendre en charge toutes les STA connectées.
+
 __Question__ : quels codes/raisons justifient l'envoie de la trame à l'AP et pourquoi ?
+
+Le reason code numéro huit nécessitent l'envoit de la trame à l'AP car il permet de notifier l'AP par une STA qu'elle quitte le BSS.
 
 __Question__ : Comment essayer de déauthentifier toutes les STA ?
 
-?????? On peut essayer d'envoyer un paquet par station connectée (on adapte la mac) ou via broadcast
+En utilisant un reason code qui doit être envoyé par l'AP vers les STA comme le cinq par exemple et en l'envoyant avec comme adresse mac de destination `ff:ff:ff:ff:ff` ce qui permet de broadcast la trame sur le réseau.
 
 __Question__ : Quelle est la différence entre le code 3 et le code 8 de la liste ?
 

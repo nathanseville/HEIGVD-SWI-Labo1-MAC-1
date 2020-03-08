@@ -97,6 +97,8 @@ C'est le reason code numéro sept qui est utilisé par aircrack pour déauthenti
 
 __Question__ : A l'aide d'un filtre d'affichage, essayer de trouver d'autres trames de déauthentification dans votre capture. Avez-vous en trouvé d'autres ? Si oui, quel code contient-elle et quelle est son interpretation ?
 
+On peut chercher les trames de déauthentification avec le filtre d'affichage `wlan.fc.type_subtype == 12` dans wireshark.
+
 b) Développer un script en Python/Scapy capable de générer et envoyer des trames de déauthentification. Le script donne le choix entre des Reason codes différents (liste ci-après) et doit pouvoir déduire si le message doit être envoyé à la STA ou à l'AP :
 * 1 - Unspecified
 * 4 - Disassociated due to inactivity

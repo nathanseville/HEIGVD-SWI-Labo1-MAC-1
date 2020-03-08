@@ -117,6 +117,9 @@ En utilisant un reason code qui doit être envoyé par l'AP vers les STA comme l
 
 __Question__ : Quelle est la différence entre le code 3 et le code 8 de la liste ?
 
+- 3 `station is leaving (or has left) IBSS or ESS`, le client n'utilise plus le réseau, il est déauthentifié.
+- 8 `Disassociated because sending station is leaving (or has left) BSS`, le client à changé d'AP du même réseau, le client est désassocié.
+
 __Question__ : Expliquer l'effet de cette attaque sur la cible
 
 Cette attaque déconnecte la cible du point d'accès, mais comme la cible continue de recevoir des beacons du vrai AP elle va se reconnecter directement. La station va donc continuellement réaliser le cycle connexion/déconnexion.

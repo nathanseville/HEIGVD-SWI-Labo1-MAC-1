@@ -88,7 +88,7 @@ Le corps de la trame (Frame body) contient, entre autres, un champ de deux octet
 | 39 | Requested from peer QSTA due to timeout                                                                                                                                              |
 | 40 | Peer QSTA does not support the requested cipher suite                                                                                                                                              |
 | 46-65535 | Reserved                                                                                                                                              |
- 
+
 a) Utiliser la fonction de déauthentification de la suite aircrack, capturer les échanges et identifier le Reason code et son interpretation.
 
 __Question__ : quel code est utilisé par aircrack pour déauthentifier un client 802.11. Quelle est son interpretation ?
@@ -97,7 +97,11 @@ C'est le reason code numéro sept qui est utilisé par aircrack pour déauthenti
 
 __Question__ : A l'aide d'un filtre d'affichage, essayer de trouver d'autres trames de déauthentification dans votre capture. Avez-vous en trouvé d'autres ? Si oui, quel code contient-elle et quelle est son interpretation ?
 
-On peut chercher les trames de déauthentification avec le filtre d'affichage `wlan.fc.type_subtype == 12` dans wireshark.
+On peut chercher les trames de déauthentification qui n'ont pas le Reason Code sept avec le filtre d'affichage `wlan.fc.type_subtype == 12 && wlan.fixed.reason_code != 7` dans Wireshark.
+
+L'image suivante est tirée d'un capture Wireshark après l'application du filtre. On peut voir le `Reason Code` tout en bas de l'image, ici 1 soit  `Unspecified`.
+
+![not_seven_reason_code](./images/not_seven_reason_code.PNG)
 
 b) Développer un script en Python/Scapy capable de générer et envoyer des trames de déauthentification. Le script donne le choix entre des Reason codes différents (liste ci-après) et doit pouvoir déduire si le message doit être envoyé à la STA ou à l'AP :
 * 1 - Unspecified
